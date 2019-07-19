@@ -1,6 +1,7 @@
 import React from 'react';
 import { render } from "react-dom";
 import styled from 'styled-components';
+import GlobalStyle from "./GlobalStyle";
 
 const Container = styled.div`
   height: 100vh;
@@ -19,9 +20,13 @@ const Header = styled.h1`
 
 const App = () => {
   return (
+    <>
+    <GlobalStyle/>
     <Container>
       <Header>Test header</Header>
     </Container>
+    </>
+    
   )
 };
 
