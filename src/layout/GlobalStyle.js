@@ -2,6 +2,9 @@ import React from "react";
 import styled, {createGlobalStyle} from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
+
+@import url('https://fonts.googleapis.com/css?family=Exo+2:800&display=swap');
+
 *,
 *::before,
 *::after {
