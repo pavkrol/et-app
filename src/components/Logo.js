@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import {Link} from "@reach/router";
 
 const Wrapper = styled.div`
   display: flex;
@@ -20,7 +21,7 @@ font-size: 20px;
 
 const Logo = () => {
   return (
-    <Wrapper>
+    <Wrapper as={Link} to="/">
       <Abbr>ET.</Abbr>
       <AppName>easy taxing app</AppName>
     </Wrapper>

@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
+import HeaderWrapper from "./HeaderWrapper";
+import MainContent from './MainContent';
 
 const Box = styled.div`
   width: 100%;
@@ -9,7 +11,10 @@ const Box = styled.div`
 
 const RegisterPage = () => {
   return (
-    <Box></Box>
+    <>
+      <HeaderWrapper />
+      <MainContent />
+    </>
   )
 };
 

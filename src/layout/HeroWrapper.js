@@ -20,6 +20,7 @@ const Title = styled.h2`
   line-height: 41px;
   color: white;
   margin-bottom: 10px;
+  padding-top: 20vh;
 `;
 
 const Subtitle = styled.h3`
@@ -38,7 +39,6 @@ const ButtonsWrapper = styled.div`
 const WrapperLeft = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
 
   * {
     margin-right: 20px;
@@ -55,7 +55,7 @@ const HeroWrapper = () => {
         <Title>Podatki, faktury, płatności - wszystko w jednym miejscu</Title>
         <Subtitle>Wszystko czego potrzebujesz, żeby samodzielnie prowadzić księgowość w jednoosobowej działalności gospodarczej</Subtitle>
         <ButtonsWrapper>
-          <Button type="full">Zarejestruj</Button>
+          <Button as={Link} to="register" type="full">Zarejestruj</Button>
           <Button type="empty">Zaloguj</Button>
         </ButtonsWrapper>
         </WrapperLeft> 
