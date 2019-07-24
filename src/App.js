@@ -1,11 +1,23 @@
 import React from 'react';
 import { render } from "react-dom";
-import styled from 'styled-components';
-import Layout from "./layout/Layout";
+import LandingPage from "./layout/LandingPage";
+import {ThemeProvider} from 'styled-components';
+import GlobalStyle from "./layout/GlobalStyle";
+import { theme } from "./layout/theme";
+import { Router } from "@reach/router";
+import RegisterPage from './layout/RegisterPage';
 
 const App = () => {
   return (
-    <Layout/> 
+    <ThemeProvider theme={theme}>
+      <>
+      <GlobalStyle/>
+      <Router>
+        <LandingPage path="/" />
+        <RegisterPage path="register" />
+      </Router>
+      </>
+    </ThemeProvider>
   )
 };
 

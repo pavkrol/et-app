@@ -18,7 +18,7 @@ const HeaderWrapper = () => {
   return (
       <Header>
         <Logo/>
-        <Button>wersja demo</Button>
+        <Button type="gradient">wersja demo</Button>
       </Header>
   )
 }
