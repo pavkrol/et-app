@@ -39,7 +39,7 @@ const MainContent = () => {
     <Content>
       <FormWrapper>
       <Title>Rejestracja</Title>
-      <Description>Żeby rozpocząć pracę z programem konieczne jest podanie kilku danych dotyczących Twojej działalności. Wypełnij proszę poniższy formularz.</Description>
+      <Description>Żeby rozpocząć pracę z programem konieczne jest podanie kilku danych dotyczących Twojej działalności.</Description>
       <RegisterForm/>
       </FormWrapper>
       

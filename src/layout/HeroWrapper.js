@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Button from "../components/Button";
 import { Link } from "@reach/router";
+import Hexagons from "../components/Hexagons";
 
 const Hero = styled.section`
   height: calc(100vh - 75px);
@@ -25,7 +26,7 @@ const Title = styled.h2`
 
 const Subtitle = styled.h3`
   font-family: ${({theme}) => theme.font.main};
-  font-weight: 500;
+  font-weight: 400;
   font-size: 18px;
   line-height: 22px;
   color: white;
@@ -45,6 +46,12 @@ const WrapperLeft = styled.div`
   }
 `;
 
+const WrapperRight = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+`;
+
 
 
 const HeroWrapper = () => {
@@ -58,7 +65,10 @@ const HeroWrapper = () => {
           <Button as={Link} to="register" type="full">Zarejestruj</Button>
           <Button type="empty">Zaloguj</Button>
         </ButtonsWrapper>
-        </WrapperLeft> 
+        </WrapperLeft>
+        <WrapperRight>
+          <Hexagons/>
+        </WrapperRight>
       </Hero>
     </>
   );
