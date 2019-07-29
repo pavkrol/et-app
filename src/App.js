@@ -5,7 +5,7 @@ import {ThemeProvider} from 'styled-components';
 import GlobalStyle from "./layout/GlobalStyle";
 import { theme } from "./layout/theme";
 import { Router } from "@reach/router";
-import RegisterPage from './layout/RegisterPage';
+import RegisterPage from './containers/RegisterPage';
 
 const App = () => {
   return (

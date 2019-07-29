@@ -11,7 +11,7 @@ const Content = styled.section`
 `;
 
 const FormWrapper = styled.div`
-  width: 800px;
+  width: 900px;
   min-height: 600px;
   background-color: white;
   box-shadow: 0 20px 40px rgba(0,0,0,0.25);

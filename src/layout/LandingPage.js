@@ -1,6 +1,6 @@
 import React from 'react';
-import HeaderWrapper from "./HeaderWrapper";
-import HeroWrapper from "./HeroWrapper";
+import HeaderWrapper from "../containers/HeaderWrapper";
+import HeroWrapper from "../containers/HeroWrapper";
 
 
 const LandingPage = () => {

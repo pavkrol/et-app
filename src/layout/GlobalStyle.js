@@ -18,7 +18,6 @@ input[type="text"],
 input[type="button"],
 input[type="submit"] {
   -webkit-appearance: none;
-  border-radius: 0;
 }
 
 a {
