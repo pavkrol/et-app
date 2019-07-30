@@ -1,10 +1,17 @@
 import React from 'react';
 import styled, {css} from 'styled-components';
+import Button from './Button';
+import { Link } from "@reach/router";
 
 const Form = styled.form`
   display: flex;
   flex-wrap: wrap;
   margin-top: 30px;
+  justify-content: space-between;
+  a {
+    align-self: flex-end;
+    margin-right: 30px;
+  }
 `;
 
 const Field = styled.div`
@@ -149,6 +156,7 @@ const RegisterForm = () => {
           );
         })
       }
+      <Button type="full_green" as={Link} to="financial">Dalej</Button>
     </Form>
   )
 };

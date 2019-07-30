@@ -14,7 +14,7 @@ const App = () => {
       <GlobalStyle/>
       <Router>
         <LandingPage path="/" />
-        <RegisterPage path="register" />
+        <RegisterPage path="register/*" />
       </Router>
       </>
     </ThemeProvider>

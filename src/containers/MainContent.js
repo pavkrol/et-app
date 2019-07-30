@@ -1,6 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import RegisterForm from '../components/RegisterForm';
+import FinancialForm from '../components/FinancialForm';
+import {Router} from '@reach/router';
+
 
 const Content = styled.section`
   height: calc(100vh - 75px);
@@ -12,11 +15,10 @@ const Content = styled.section`
 
 const FormWrapper = styled.div`
   width: 900px;
-  min-height: 600px;
   background-color: white;
   box-shadow: 0 20px 40px rgba(0,0,0,0.25);
   border-radius: 7px;
-  padding: 30px;
+  padding: 30px 15px 30px 45px;
 `;
 
 const Title = styled.h2`
@@ -35,15 +37,19 @@ const Description = styled.p`
 `;
 
 const MainContent = () => {
+
+
+
   return (
     <Content>
       <FormWrapper>
-      <Title>Rejestracja</Title>
-      <Description>Żeby rozpocząć pracę z programem konieczne jest podanie kilku danych dotyczących Twojej działalności.</Description>
-      <RegisterForm/>
+        <Title>Rejestracja</Title>
+        <Description>Żeby rozpocząć pracę z programem konieczne jest podanie kilku danych dotyczących Twojej działalności.</Description>
+        <Router>
+          <RegisterForm path="/"/>
+          <FinancialForm path="/financial"/>
+        </Router> 
       </FormWrapper>
-      
-      
     </Content>
   )
 };
