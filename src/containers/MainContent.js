@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import RegisterForm from '../components/RegisterForm';
 import FinancialForm from '../components/FinancialForm';
@@ -26,28 +26,26 @@ const Title = styled.h2`
   font-weight: 600;
   font-size: 24px;
   color: ${({theme}) => theme.colors.darkGreen};
-  margin-bottom: 10px;
-`;
-
-const Description = styled.p`
-  font-family: ${({theme}) => theme.font.main};
-  font-weight: 400;
-  font-size: 14px;
-  color: ${({theme}) => theme.colors.darkGreen};
 `;
 
 const MainContent = () => {
 
+  const [user, setUser] = useState({});
 
+  const updateUserData = (data) => {
+    setUser({
+      ...user,
+      data
+    });
+  }
 
   return (
     <Content>
       <FormWrapper>
         <Title>Rejestracja</Title>
-        <Description>Żeby rozpocząć pracę z programem konieczne jest podanie kilku danych dotyczących Twojej działalności.</Description>
         <Router>
-          <RegisterForm path="/"/>
-          <FinancialForm path="/financial"/>
+          <RegisterForm path="/" dataFn={updateUserData}/>
+          <FinancialForm path="financial" userData={user}/>
         </Router> 
       </FormWrapper>
     </Content>
