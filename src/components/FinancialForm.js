@@ -93,7 +93,7 @@ const FinancialForm = ({userData}) => {
         <Label inline>4. Suma wpłat na ubezpieczenie społeczne:</Label>
         <Input type="text" name="socialInsurance"/>
       </Field>
-      <Button type="full_green">Dalej</Button>
+      <Button colorstyle="full_green">Dalej</Button>
     </Form>
   )
 };

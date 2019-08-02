@@ -62,8 +62,8 @@ const HeroWrapper = () => {
         <Title>Podatki, faktury, płatności - wszystko w jednym miejscu</Title>
         <Subtitle>Wszystko czego potrzebujesz, żeby samodzielnie prowadzić księgowość w jednoosobowej działalności gospodarczej</Subtitle>
         <ButtonsWrapper>
-          <Button as={Link} to="register" type="full">Zarejestruj</Button>
-          <Button type="empty">Zaloguj</Button>
+          <Button as={Link} to="register" colorstyle="full">Zarejestruj</Button>
+          <Button colorstyle="empty">Zaloguj</Button>
         </ButtonsWrapper>
         </WrapperLeft>
         <WrapperRight>
