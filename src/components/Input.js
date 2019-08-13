@@ -4,6 +4,7 @@ const Input = styled.input`
   border: 1px solid #E5E5E5;
   border-radius: 4px;
   height: 30px;
+  position: relative;
   ${props => props.radio && css`
     opacity: 0;
     width: 0;             

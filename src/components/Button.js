@@ -3,7 +3,8 @@ import styled from "styled-components";
 const Button = styled.a`
   color: ${(props) => props.colorstyle === 'full' ? ({theme}) => theme.colors.lightGreen : 'white'};
   width: 130px;
-  height: 42px;
+  min-height: 42px;
+  max-height: 42px;
   font-family: ${({theme}) => theme.font.second};
   font-size: 16px;
   display: flex;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled, {css} from 'styled-components';
 import Description from '../components/Description';
 import Input from '../components/Input';
@@ -41,41 +41,52 @@ const FieldsWrapper = styled.div`
   flex-wrap: wrap;
 `;
 
-const FinancialForm = ({userData}) => {
+const FinancialForm = ({userData, dataFn}) => {
 
   const getDate = (date) => (date.split("-"));
   const currentDate = new Date();
   const monthsNames = ["Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień"];
   const monthsCount = currentDate.getMonth();
   const monthsArray = monthsNames.slice(0, monthsCount);
+  const [finances, setFinances] = useState({});
+
+  const updateFinances = (key, value) => {
+      setFinances({ ...finances,
+        [key]: value
+      }
+    );
+  }
 
   return (
-    <Form>
+    <Form noValidate onSubmit={(e) => {
+      console.log(finances);
+      e.preventDefault();
+    }}>
       <Description>W kolejnym kroku uzupełnij dane finansowe Twojej firmy za bieżący rok. Wszystkie poniższe kwoty podaj w PLN.</Description>
       <Field>
         <Label inline>1. Strata z roku ubiegłego (jeśli występuje):</Label>
-        <Input type="text" name="lastYearLoss"/>
+        <Input type="text" name="lastYearLoss" onChange={(e) => updateFinances(e.target.name, e.target.value)}/>
       </Field>
       {
-        monthsArray.map((element) => (
+        monthsArray.map((element, index) => (
         <React.Fragment key={element}>
           <Month>{element}</Month>
           <FieldsWrapper>
             <Field small>   
               <Label inline>Przychód (brutto):</Label>
-              <Input type="text" name="income-gross" />
+              <Input type="text" name="income-gross" onChange={(e) => updateFinances(index + " " + e.target.name, e.target.value)}/>
             </Field>
             <Field small>
               <Label inline>Przychód (netto):</Label>
-              <Input type="text" name="income" />
+              <Input type="text" name="income" onChange={(e) => updateFinances(index + " " + e.target.name, e.target.value)}/>
             </Field>
             <Field small>
               <Label inline>Koszty (brutto):</Label>
-              <Input type="text" name="costs-gross" />
+              <Input type="text" name="costs-gross" onChange={(e) => updateFinances(index + " " + e.target.name, e.target.value)}/>
             </Field>
             <Field small>
               <Label inline>Koszty (netto):</Label>
-              <Input type="text" name="consts" />
+              <Input type="text" name="costs" onChange={(e) => updateFinances(index + " " + e.target.name, e.target.value)}/>
             </Field>
           </FieldsWrapper> 
         </React.Fragment>
@@ -93,7 +104,7 @@ const FinancialForm = ({userData}) => {
         <Label inline>4. Suma wpłat na ubezpieczenie społeczne:</Label>
         <Input type="text" name="socialInsurance"/>
       </Field>
-      <Button colorstyle="full_green">Dalej</Button>
+      <Button type="submit" as="button" colorstyle="full_green">Dalej</Button>
     </Form>
   )
 };

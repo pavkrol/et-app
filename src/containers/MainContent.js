@@ -45,7 +45,7 @@ const MainContent = () => {
         <Title>Rejestracja</Title>
         <Router>
           <RegisterForm path="/" dataFn={updateUserData}/>
-          <FinancialForm path="financial" userData={user}/>
+          <FinancialForm path="financial" userData={user} dataFn={updateUserData}/>
         </Router> 
       </FormWrapper>
     </Content>
