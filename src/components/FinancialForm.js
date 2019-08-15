@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useReducer } from 'react';
 import styled, {css} from 'styled-components';
 import Description from '../components/Description';
 import Input from '../components/Input';
 import Label from '../components/Label';
 import Button from '../components/Button';
+import {initialData} from '../data/initialData';
 
 const Form = styled.form`
   display: flex;
@@ -41,31 +42,40 @@ const FieldsWrapper = styled.div`
   flex-wrap: wrap;
 `;
 
+
+
+const updateFinances = (state, action) => {
+  if(action.type === "update") {
+    return state.map(element => {
+      if(element.id === action.id) {
+        return {...element, [action.key]: action.value};
+      }
+      else 
+        return element;
+    })
+  } else 
+  return state;
+};
+
 const FinancialForm = ({userData, dataFn}) => {
 
-  const getDate = (date) => (date.split("-"));
   const currentDate = new Date();
-  const monthsNames = ["Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień"];
+  const monthsNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const monthsCount = currentDate.getMonth();
   const monthsArray = monthsNames.slice(0, monthsCount);
-  const [finances, setFinances] = useState({});
 
-  const updateFinances = (key, value) => {
-      setFinances({ ...finances,
-        [key]: value
-      }
-    );
-  }
+  const [finances, dispatch] = useReducer(updateFinances, initialData);
 
   return (
     <Form noValidate onSubmit={(e) => {
       console.log(finances);
       e.preventDefault();
+
     }}>
       <Description>W kolejnym kroku uzupełnij dane finansowe Twojej firmy za bieżący rok. Wszystkie poniższe kwoty podaj w PLN.</Description>
       <Field>
         <Label inline>1. Strata z roku ubiegłego (jeśli występuje):</Label>
-        <Input type="text" name="lastYearLoss" onChange={(e) => updateFinances(e.target.name, e.target.value)}/>
+        <Input type="text" name="lastYearLoss" onChange={(e) => console.log(e.target.value)}/>
       </Field>
       {
         monthsArray.map((element, index) => (
@@ -74,19 +84,19 @@ const FinancialForm = ({userData, dataFn}) => {
           <FieldsWrapper>
             <Field small>   
               <Label inline>Przychód (brutto):</Label>
-              <Input type="text" name="income-gross" onChange={(e) => updateFinances(index + " " + e.target.name, e.target.value)}/>
+              <Input type="text" name="income_gross" data-month={element} onChange={(e) => dispatch({type: 'update', id: e.target.dataset.month, key: e.target.name, value: e.target.value})}/>
             </Field>
             <Field small>
               <Label inline>Przychód (netto):</Label>
-              <Input type="text" name="income" onChange={(e) => updateFinances(index + " " + e.target.name, e.target.value)}/>
+              <Input type="text" name="income" data-month={element} onChange={(e) => dispatch({type: 'update', id: e.target.dataset.month, key: e.target.name, value: e.target.value})}/>
             </Field>
             <Field small>
               <Label inline>Koszty (brutto):</Label>
-              <Input type="text" name="costs-gross" onChange={(e) => updateFinances(index + " " + e.target.name, e.target.value)}/>
+              <Input type="text" name="costs_gross" data-month={element} onChange={(e) => dispatch({type: 'update', id: e.target.dataset.month, key: e.target.name, value: e.target.value})}/>
             </Field>
             <Field small>
               <Label inline>Koszty (netto):</Label>
-              <Input type="text" name="costs" onChange={(e) => updateFinances(index + " " + e.target.name, e.target.value)}/>
+              <Input type="text" name="costs" data-month={element} onChange={(e) => dispatch({type: 'update', id: e.target.dataset.month, key: e.target.name, value: e.target.value})}/>
             </Field>
           </FieldsWrapper> 
         </React.Fragment>
