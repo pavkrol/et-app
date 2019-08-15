@@ -3,11 +3,11 @@ import styled from "styled-components";
 import HeaderWrapper from "./HeaderWrapper";
 import MainContent from './MainContent';
 
-const RegisterPage = () => {
+const RegisterPage = ({dataFn, finFn}) => {
   return (
     <>
       <HeaderWrapper />
-      <MainContent />
+      <MainContent dataFn={dataFn} finFn={finFn}/>
     </>
   )
 };

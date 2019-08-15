@@ -5,6 +5,7 @@ import Input from '../components/Input';
 import Label from '../components/Label';
 import Button from '../components/Button';
 import {initialData} from '../data/initialData';
+import { navigate } from "@reach/router";
 
 const Form = styled.form`
   display: flex;
@@ -57,7 +58,7 @@ const updateFinances = (state, action) => {
   return state;
 };
 
-const FinancialForm = ({userData, dataFn}) => {
+const FinancialForm = ({finFn}) => {
 
   const currentDate = new Date();
   const monthsNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -70,7 +71,8 @@ const FinancialForm = ({userData, dataFn}) => {
     <Form noValidate onSubmit={(e) => {
       console.log(finances);
       e.preventDefault();
-
+      finFn(finances);
+      navigate("../dashboard");
     }}>
       <Description>W kolejnym kroku uzupełnij dane finansowe Twojej firmy za bieżący rok. Wszystkie poniższe kwoty podaj w PLN.</Description>
       <Field>
@@ -78,7 +80,7 @@ const FinancialForm = ({userData, dataFn}) => {
         <Input type="text" name="lastYearLoss" onChange={(e) => console.log(e.target.value)}/>
       </Field>
       {
-        monthsArray.map((element, index) => (
+        monthsArray.map((element) => (
         <React.Fragment key={element}>
           <Month>{element}</Month>
           <FieldsWrapper>

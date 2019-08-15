@@ -119,8 +119,8 @@ const RegisterForm = ({dataFn}) => {
       fieldsErrors.REGON = true;
     }
     setError(fieldsErrors);
-    if(fieldsAreValid) navigate("register/financial");
     dataFn(company);
+    if(fieldsAreValid) navigate("register/financial");
   };
 
   return(

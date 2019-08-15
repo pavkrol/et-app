@@ -28,24 +28,14 @@ const Title = styled.h2`
   color: ${({theme}) => theme.colors.darkGreen};
 `;
 
-const MainContent = () => {
-
-  const [user, setUser] = useState({});
-
-  const updateUserData = (data) => {
-    setUser({
-      ...user,
-      data
-    });
-  }
-
+const MainContent = ({dataFn, finFn}) => {
   return (
     <Content>
       <FormWrapper>
         <Title>Rejestracja</Title>
         <Router>
-          <RegisterForm path="/" dataFn={updateUserData}/>
-          <FinancialForm path="financial" userData={user} dataFn={updateUserData}/>
+          <RegisterForm path="/" dataFn={dataFn}/>
+          <FinancialForm path="financial" finFn={finFn}/>
         </Router> 
       </FormWrapper>
     </Content>
