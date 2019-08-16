@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from 'react';
+import React, { useReducer } from 'react';
 import styled, {css} from 'styled-components';
 import Description from '../components/Description';
 import Input from '../components/Input';
@@ -69,7 +69,6 @@ const FinancialForm = ({finFn}) => {
 
   return (
     <Form noValidate onSubmit={(e) => {
-      console.log(finances);
       e.preventDefault();
       finFn(finances);
       navigate("../dashboard");

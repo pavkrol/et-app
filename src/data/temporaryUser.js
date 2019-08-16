@@ -1,0 +1,100 @@
+export const temporaryUser = {
+  financeData: [
+    {
+      id: "January",
+      income_gross: "234432",
+      income: "34343",
+      costs_gross: "32432",
+      costs: "2344432",
+    },
+    {
+      id: "February",
+      income_gross: "2344432",
+      income: "234234",
+      costs_gross: "43223",
+      costs: "443234",
+    },
+    {
+      id: "March",
+      income_gross: "4324",
+      income: "43234",
+      costs_gross: "4324432",
+      costs: "423",
+    },
+    {
+      id: "April",
+      income_gross: "43234",
+      income: "234",
+      costs_gross: "234",
+      costs: "234",
+    },
+    {
+      id: "May",
+      income_gross: "232",
+      income: "22543",
+      costs_gross: "5433",
+      costs: "54334",
+    },
+    {
+      id: "June",
+      income_gross: "4345",
+      income: "6544",
+      costs_gross: "456",
+      costs: "45456",
+    },
+    {
+      id: "July",
+      income_gross: "456654",
+      income: "45456",
+      costs_gross: "456654",
+      costs: "456654",
+    },
+    {
+      id: "August",
+      income_gross: "",
+      income: "",
+      costs_gross: "",
+      costs: "",
+    },
+    {
+      id: "September",
+      income_gross: "",
+      income: "",
+      costs_gross: "",
+      costs: "",
+    },
+    {
+      id: "October",
+      income_gross: "",
+      income: "",
+      costs_gross: "",
+      costs: "",
+    },
+    {
+      id: "November",
+      income_gross: "",
+      income: "",
+      costs_gross: "",
+      costs: "",
+    },
+    {
+      id: "December",
+      income_gross: "",
+      income: "",
+      costs_gross: "",
+      costs: "",
+    }
+  ],
+  userData: {
+    NIP: "9570884466",
+    PIT_freq: "kwartalnie",
+    REGON: "365095696",
+    VAT_freq: "miesięcznie",
+    ZUS: "mały zus",
+    address: "Lawendowe Wzgórze 20/7",
+    city: "Gdańsk",
+    company: "PAKRO Paweł Król",
+    postal: "80175",
+    start_date: "2017-07-11"
+  }
+}
