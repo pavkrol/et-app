@@ -3,7 +3,7 @@ import styled, {createGlobalStyle} from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
 
-@import url('https://fonts.googleapis.com/css?family=Exo+2:800|Montserrat:400,500,700|Raleway:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Exo+2:400,800|Montserrat:400,500,700|Raleway:400,700&display=swap');
 
 *,
 *::before,

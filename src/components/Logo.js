@@ -8,15 +8,17 @@ const Wrapper = styled.div`
 `;
 
 const Abbr = styled.h2`
-color: ${({theme}) => theme.colors.darkGreen};
-font-family: ${({theme}) => theme.font.logo};
-font-size: 36px;
+  color: ${({theme}) => theme.colors.darkGreen};
+  font-family: ${({theme}) => theme.font.logo};
+  font-size: 36px;
+  font-weight: 800;
 `;
 
 const AppName = styled.h1`
-color: ${({theme}) => theme.colors.darkGreen};
-font-family: ${({theme}) => theme.font.logo};
-font-size: 20px;
+  color: ${({theme}) => theme.colors.darkGreen};
+  font-family: ${({theme}) => theme.font.logo};
+  font-size: 20px;
+  font-weight: 800;
 `;
 
 const Logo = () => {

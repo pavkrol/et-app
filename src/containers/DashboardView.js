@@ -14,6 +14,7 @@ const LogoWrapper = styled.div`
   justify-content: center;
   align-items: center;
   border-right: 1px solid #E3E3E3;
+  border-bottom: 1px solid #E3E3E3;
 `;
 
 const DashboardHeader = styled.header`
@@ -21,6 +22,23 @@ const DashboardHeader = styled.header`
   display: flex;
   justify-content: flex-end;
   align-items: center;
+`;
+
+const Aside = styled.nav``;
+
+const NavigationList = styled.ul`
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
+`;
+
+const NavItem = styled.li`
+  height: 60px;
+  color: #ABA8A8;
+  font-family: ${({theme}) => theme.font.logo};
+  font-size: 16px;
+  font-weight: 400;
+  padding-left: 40px;
 `;
 
 const DashboardView = ({userProfile}) => {
@@ -32,6 +50,15 @@ const DashboardView = ({userProfile}) => {
       <DashboardHeader>
         <ProfilePhoto companyName={userProfile.userData.company}/>
       </DashboardHeader>
+      <Aside>
+        <NavigationList>
+          <NavItem>Pulpit</NavItem>
+          <NavItem>Podatki</NavItem>
+          <NavItem>Faktury</NavItem>
+          <NavItem>Wydatki</NavItem>
+          <NavItem>Zadania</NavItem>
+        </NavigationList>
+      </Aside>
     </DashboardWrapper>
   )
 };
