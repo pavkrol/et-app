@@ -1,20 +1,30 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, {useState} from 'react';
+import styled, {css} from 'styled-components';
 import Logo from '../components/Logo';
 import ProfilePhoto from '../components/ProfilePhoto';
+import OverallData from '../containers/OverallData';
+
 
 const DashboardWrapper = styled.main`
   display: grid;
   grid-template-columns: 325px 1fr;
-  grid-template-rows: 75px 1fr;
+  grid-template-rows: 75px calc(100vh - 75px);
+`;
+
+const DashboardContent = styled.section`
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: ${({theme}) => theme.colors.lighterGrey};
+  padding: 40px;
 `;
 
 const LogoWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border-right: 1px solid #E3E3E3;
-  border-bottom: 1px solid #E3E3E3;
+  border-right: 1px solid ${({theme}) => theme.colors.lightGrey};
+  border-bottom: 1px solid ${({theme}) => theme.colors.lightGrey};
 `;
 
 const DashboardHeader = styled.header`
@@ -34,14 +44,35 @@ const NavigationList = styled.ul`
 
 const NavItem = styled.li`
   height: 60px;
+`;
+
+const NavButton = styled.button`
   color: #ABA8A8;
   font-family: ${({theme}) => theme.font.logo};
   font-size: 16px;
   font-weight: 400;
   padding-left: 40px;
+  width: 100%;
+  display: flex;
+  height: 100%;
+  ${props => props.active && css`
+    color: ${({theme}) => theme.colors.darkGreen};
+    border-left: 7px solid ${({theme}) => theme.colors.darkGreen};
+    padding-left: 33px;
+    font-weight: 600;
+  `}
+  &:hover {
+    color: ${({theme}) => theme.colors.darkGreen};
+    background-color: ${({theme}) => theme.colors.lightGrey};
+    border-left: 7px solid ${({theme}) => theme.colors.darkGreen};
+    padding-left: 33px;
+  }
 `;
 
 const DashboardView = ({userProfile}) => {
+  
+  const [activeView, setActiveView] = useState("overall");
+
   return (
     <DashboardWrapper>
       <LogoWrapper>
@@ -52,13 +83,28 @@ const DashboardView = ({userProfile}) => {
       </DashboardHeader>
       <Aside>
         <NavigationList>
-          <NavItem>Pulpit</NavItem>
-          <NavItem>Podatki</NavItem>
-          <NavItem>Faktury</NavItem>
-          <NavItem>Wydatki</NavItem>
-          <NavItem>Zadania</NavItem>
+          <NavItem>
+            <NavButton active={activeView === "overall" ? true : false} onClick={() => setActiveView("overall")}>Pulpit</NavButton>
+          </NavItem>
+          <NavItem>
+            <NavButton active={activeView === "taxes" ? true : false} onClick={() => setActiveView("taxes")}>Podatki</NavButton>
+          </NavItem>
+          <NavItem>
+            <NavButton active={activeView === "invoices" ? true : false} onClick={() => setActiveView("invoices")}>Faktury</NavButton>
+          </NavItem>
+          <NavItem>
+            <NavButton active={activeView === "costs" ? true : false} onClick={() => setActiveView("costs")}>Wydatki</NavButton>
+          </NavItem>
+          <NavItem>
+            <NavButton active={activeView === "tasks" ? true : false} onClick={() => setActiveView("tasks")}>Zadania</NavButton>
+          </NavItem>
         </NavigationList>
       </Aside>
+      <DashboardContent>
+        {activeView === "overall" ? (
+          <OverallData userProfile={userProfile}/>
+        ) : ("") }
+      </DashboardContent>
     </DashboardWrapper>
   )
 };
