@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { render } from "react-dom";
 import LandingPage from "./layout/LandingPage";
 import {ThemeProvider} from 'styled-components';

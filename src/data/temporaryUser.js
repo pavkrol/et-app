@@ -3,14 +3,14 @@ export const temporaryUser = {
     {
       id: "January",
       income_gross: "234432",
-      income: "34343",
+      income: "34343.55",
       costs_gross: "32432",
       costs: "2344432",
     },
     {
       id: "February",
       income_gross: "2344432",
-      income: "234234",
+      income: "234234.34",
       costs_gross: "43223",
       costs: "443234",
     },
@@ -51,38 +51,38 @@ export const temporaryUser = {
     },
     {
       id: "August",
-      income_gross: "",
-      income: "",
-      costs_gross: "",
-      costs: "",
+      income_gross: "0",
+      income: "0",
+      costs_gross: "0",
+      costs: "0",
     },
     {
       id: "September",
-      income_gross: "",
-      income: "",
-      costs_gross: "",
-      costs: "",
+      income_gross: "0",
+      income: "0",
+      costs_gross: "0",
+      costs: "0",
     },
     {
       id: "October",
-      income_gross: "",
-      income: "",
-      costs_gross: "",
-      costs: "",
+      income_gross: "0",
+      income: "0",
+      costs_gross: "0",
+      costs: "0",
     },
     {
       id: "November",
-      income_gross: "",
-      income: "",
-      costs_gross: "",
-      costs: "",
+      income_gross: "0",
+      income: "0",
+      costs_gross: "0",
+      costs: "0",
     },
     {
       id: "December",
-      income_gross: "",
-      income: "",
-      costs_gross: "",
-      costs: "",
+      income_gross: "0",
+      income: "0",
+      costs_gross: "0",
+      costs: "0",
     }
   ],
   userData: {
@@ -95,6 +95,35 @@ export const temporaryUser = {
     city: "Gdańsk",
     company: "PAKRO Paweł Król",
     postal: "80175",
-    start_date: "2017-07-11"
-  }
+    start_date: "2017-07-11",
+  },
+  aggregatedData: {
+    lastYearLoss: "4534",
+    taxesThisYear: "463",
+    vatThisYear: "6554",
+    insuranceThisYear: "554"
+  },
+  transactions: [
+    {
+      id: 1,
+      date: "2019-08-11",
+      client: "Shell Sp. z o.o.",
+      value: "123.45",
+      type: "wydatek"
+    },
+    {
+      id: 2,
+      date: "2019-08-07",
+      client: "AN-GAZ Angelika Król",
+      value: "3472.23",
+      type: "przychód"
+    },
+    {
+      id: 3,
+      date: "2019-08-05",
+      client: "I Urząd Skarbowy w Gdańsku",
+      value: "265.23",
+      type: "podatek"
+    }
+  ]
 }

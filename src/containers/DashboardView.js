@@ -17,6 +17,7 @@ const DashboardContent = styled.section`
   height: 100%;
   background-color: ${({theme}) => theme.colors.lighterGrey};
   padding: 40px;
+  overflow: auto;
 `;
 
 const LogoWrapper = styled.div`
