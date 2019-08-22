@@ -109,14 +109,20 @@ export const temporaryUser = {
       date: "2019-08-11",
       client: "Shell Sp. z o.o.",
       value: "123.45",
-      type: "wydatek"
+      type: "wydatek",
+      VAT_level: 0.23,
+      client_address: "Al.Jerozolimskie 234, 00-234 Warszawa",
+      document_nr: "FV/3223756328/2345/2019"
     },
     {
       id: 2,
       date: "2019-08-07",
       client: "AN-GAZ Angelika Król",
       value: "3472.23",
-      type: "przychód"
+      type: "przychód",
+      VAT_level: 0.23,
+      client_address: "ul. Uczniowska 52, 80-530 Gdańsk",
+      document_nr: "FV/A2/8/2019"
     },
     {
       id: 3,

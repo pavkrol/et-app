@@ -1,12 +1,14 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
+import Details from './Details';
 
 const Wrapper = styled.div`
   padding: 20px 40px;
   background-color: #F3F3F3;
-  height: 55px;
+  min-height: 55px;
   display: grid;
   grid-template-columns: 18% 1fr 15% 17% 15%;
+  grid-template-rows: ${(props) => props.showDetails ? 'repeat(2, auto)' : 'auto'};
   margin-bottom: 10px;
 `;
 
@@ -52,13 +54,21 @@ const DetailsDropdown = styled.button`
 `;
 
 const Transaction = ({transaction}) => {
+  
+  const [detailsOpen, setDetails] = useState(false);
+  
   return(
-    <Wrapper>
+    <Wrapper showDetails={detailsOpen}>
       <Date>{transaction.date}</Date>
       <Client>{transaction.client}</Client>
       <Amount>{transaction.value} PLN</Amount>
       <Type type={transaction.type}>{transaction.type}</Type>
-      <DetailsDropdown>Szczegóły</DetailsDropdown>
+      {transaction.type !== 'podatek' ? 
+      <DetailsDropdown onClick={() => setDetails(!detailsOpen)}>Szczegóły {!detailsOpen ? <>&#8595;</> : <>&#8593;</>}</DetailsDropdown>
+      : ""}
+      {detailsOpen && transaction.type !== 'podatek' ? (
+        <Details isOpen={detailsOpen} transaction={transaction}/>
+      ) : ""}
     </Wrapper>
   )
 };
