@@ -37,7 +37,7 @@ const OverallData = ({userProfile}) => {
 
   return(
     <Wrapper>
-      <DataBox data={currentMonth} description="Bieżący miesiąc:"/>
+      <DataBox data={currentMonth} description="Bieżący miesiąc:" currentMonth/>
       <DataBox data={aggregatedData} description="Od początku roku:"/>
       <TransactionsBox transactions={userProfile.transactions}/>
     </Wrapper>
