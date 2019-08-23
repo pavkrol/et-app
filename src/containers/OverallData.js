@@ -11,7 +11,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const OverallData = ({userProfile}) => {
+const OverallData = ({userProfile, modalFn}) => {
  
   const incomeSum = userProfile.financeData.reduce((prev, next) => {
     return parseFloat(prev) + parseFloat(next.income);
@@ -37,7 +37,7 @@ const OverallData = ({userProfile}) => {
 
   return(
     <Wrapper>
-      <DataBox data={currentMonth} description="Bieżący miesiąc:" currentMonth/>
+      <DataBox data={currentMonth} description="Bieżący miesiąc:" currentMonth modalFn={modalFn}/>
       <DataBox data={aggregatedData} description="Od początku roku:"/>
       <TransactionsBox transactions={userProfile.transactions}/>
     </Wrapper>

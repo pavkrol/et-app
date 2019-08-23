@@ -112,7 +112,8 @@ export const temporaryUser = {
       type: "wydatek",
       VAT_level: 0.23,
       client_address: "Al.Jerozolimskie 234, 00-234 Warszawa",
-      document_nr: "FV/3223756328/2345/2019"
+      document_nr: "FV/3223756328/2345/2019",
+      NIP_number: "9570884466"
     },
     {
       id: 2,
@@ -122,7 +123,8 @@ export const temporaryUser = {
       type: "przychód",
       VAT_level: 0.23,
       client_address: "ul. Uczniowska 52, 80-530 Gdańsk",
-      document_nr: "FV/A2/8/2019"
+      document_nr: "FV/A2/8/2019",
+      NIP_number: "9570884466"
     },
     {
       id: 3,

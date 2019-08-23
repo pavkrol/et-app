@@ -47,7 +47,7 @@ const AddTransaction = styled.button`
   }
 `;
 
-const DataBox = ({data, description, ...props}) => {
+const DataBox = ({data, description, modalFn, ...props}) => {
   
   
   return(
@@ -58,8 +58,8 @@ const DataBox = ({data, description, ...props}) => {
       <Tile type="taxes" data={data.taxes}></Tile>
       {props.currentMonth ? (
         <>
-        <AddTransaction>Wystaw fakturę</AddTransaction>
-        <AddTransaction>Dodaj wydatek</AddTransaction>
+        <AddTransaction onClick={() => modalFn(true)}>Wystaw fakturę</AddTransaction>
+        <AddTransaction onClick={() => modalFn(true)}>Dodaj wydatek</AddTransaction>
         </>
       ) : ""}
     </Wrapper>

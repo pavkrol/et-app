@@ -3,6 +3,7 @@ import styled, {css} from 'styled-components';
 import Logo from '../components/Logo';
 import ProfilePhoto from '../components/ProfilePhoto';
 import OverallData from '../containers/OverallData';
+import AddTransactionModal from '../components/AddTransactionModal';
 
 
 const DashboardWrapper = styled.main`
@@ -73,6 +74,7 @@ const NavButton = styled.button`
 const DashboardView = ({userProfile}) => {
   
   const [activeView, setActiveView] = useState("overall");
+  const [transactionModal, setTransactionModal] = useState(false);
 
   return (
     <DashboardWrapper>
@@ -103,8 +105,16 @@ const DashboardView = ({userProfile}) => {
       </Aside>
       <DashboardContent>
         {activeView === "overall" ? (
-          <OverallData userProfile={userProfile}/>
+          <OverallData userProfile={userProfile} modalFn={setTransactionModal}/>
         ) : ("") }
+        {transactionModal ? 
+        (
+          <AddTransactionModal modalFn={setTransactionModal}/>
+        ):(
+          ""
+        )
+        }
+
       </DashboardContent>
     </DashboardWrapper>
   )
