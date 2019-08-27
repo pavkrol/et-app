@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Label from '../components/Label';
 import Input from '../components/Input';
 import Button from '../components/Button';
+import Select from '../components/Select';
 
 const ModalWrapper = styled.div`
   position: absolute;
@@ -68,8 +69,7 @@ const InputField = styled.div`
   align-items: center;
 `;
 
-const AddTransactionModal = ({modalFn}) => {
-  
+const AddTransactionModal = ({modalFn, transactionFn}) => {
   
   const [date, setDate] = useState("");
   const [documentNumber, setDocumentNumber] = useState("");
@@ -79,6 +79,7 @@ const AddTransactionModal = ({modalFn}) => {
   const [company, setCompany] = useState("");
   const [address, setAddress] = useState("");
   const [nip, setNip] = useState("");
+  const [type, setType] = useState("przychód");
   
   const updateValueGross = () => {
     const vat = document.getElementById("transaction_vat");
@@ -86,19 +87,24 @@ const AddTransactionModal = ({modalFn}) => {
     setValueGross(((vat.value / 100 + 1) * netto.value).toFixed(2));
   };
 
-  const addTransaction = (date,documentNumber,value,vatLevel,company,address,nip) => {
+  const addTransaction = (date, documentNumber, value, vatLevel, company, address, nip, type) => {
+    
+    const random_id = () => {
+      return '_' + Math.random().toString(36).substr(2, 9);
+    }
     const newTransaction = {
-      id: 123,
+      id: random_id(),
       date: date,
       client: company,
       value: value,
-      type: "wydatek",
+      type: type,
       VAT_level: vatLevel / 100,
       client_address: address,
       document_nr: documentNumber,
       NIP_number: nip
     }
     console.log(newTransaction);
+    transactionFn(newTransaction);
   };
 
   return(
@@ -108,9 +114,13 @@ const AddTransactionModal = ({modalFn}) => {
         <Title>Dodawanie transakcji:</Title>
         <ModalForm onSubmit={(e) => {
           e.preventDefault();
-          addTransaction(date,documentNumber,value,vatLevel,company,address,nip);
+          addTransaction(date, documentNumber, value, vatLevel, company, address, nip, type);
           modalFn(false);
         }}>
+          <InputField>
+            <Label inline htmlFor="transaction_type">Rodzaj transakcji:</Label>
+            <Select id="transaction_type" options={["przychód", "wydatek"]} changeFn={setType} />
+          </InputField>
           <InputField>
             <Label inline htmlFor="transaction_date">Data:</Label>
             <Input id="transaction_date" type="date" onChange={(e) => setDate(e.target.value)}></Input>
@@ -124,6 +134,7 @@ const AddTransactionModal = ({modalFn}) => {
             <Input 
               id="transaction_value" 
               type="number" 
+              step="0.01"
               onChange={(e) => {
                 setValue(e.target.value);
                 updateValueGross();

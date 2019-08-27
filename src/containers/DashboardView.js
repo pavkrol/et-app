@@ -71,7 +71,7 @@ const NavButton = styled.button`
   }
 `;
 
-const DashboardView = ({userProfile}) => {
+const DashboardView = ({userProfile, userTransactions, transactionFn}) => {
   
   const [activeView, setActiveView] = useState("overall");
   const [transactionModal, setTransactionModal] = useState(false);
@@ -105,11 +105,11 @@ const DashboardView = ({userProfile}) => {
       </Aside>
       <DashboardContent>
         {activeView === "overall" ? (
-          <OverallData userProfile={userProfile} modalFn={setTransactionModal}/>
+          <OverallData userProfile={userProfile} modalFn={setTransactionModal} userTransactions={userTransactions}/>
         ) : ("") }
         {transactionModal ? 
         (
-          <AddTransactionModal modalFn={setTransactionModal}/>
+          <AddTransactionModal modalFn={setTransactionModal} transactionFn={transactionFn}/>
         ):(
           ""
         )

@@ -13,6 +13,7 @@ const App = () => {
 
   const [user, setUser] = useState({});
   const [finance, setData] = useState({});
+  const [transactions, setTransactions] = useState(temporaryUser.transactions);
 
   const updateUserData = (userData) => {
     setUser({
@@ -28,7 +29,14 @@ const App = () => {
     });
   }
 
-  const userProfile = {...user, ...finance};
+  const updateTransactions = (transaction) => {
+    setTransactions([
+      ...transactions,
+      transaction
+    ]);
+  }
+
+  const userProfile = {...user, ...finance, ...transactions};
 
   return (
     <ThemeProvider theme={theme}>
@@ -37,7 +45,7 @@ const App = () => {
       <Router>
         <LandingPage path="/" />
         <RegisterPage path="register/*" dataFn={updateUserData} finFn={updateFinancialData}/>
-        <DashboardView path="dashboard/*" userProfile={temporaryUser}/>
+        <DashboardView path="dashboard/*" userProfile={temporaryUser} userTransactions={transactions} transactionFn={updateTransactions}/>
       </Router>
       </>
     </ThemeProvider>

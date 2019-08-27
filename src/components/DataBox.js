@@ -58,8 +58,7 @@ const DataBox = ({data, description, modalFn, ...props}) => {
       <Tile type="taxes" data={data.taxes}></Tile>
       {props.currentMonth ? (
         <>
-        <AddTransaction onClick={() => modalFn(true)}>Wystaw fakturę</AddTransaction>
-        <AddTransaction onClick={() => modalFn(true)}>Dodaj wydatek</AddTransaction>
+        <AddTransaction onClick={() => modalFn(true)}>Dodaj transakcję</AddTransaction>
         </>
       ) : ""}
     </Wrapper>
