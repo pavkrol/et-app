@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Logo from "../components/Logo";
 import Button from "../components/Button";
+import { navigate } from "@reach/router";
 
 const Header = styled.header`
   height: 75px;
@@ -18,7 +19,7 @@ const HeaderWrapper = () => {
   return (
       <Header>
         <Logo/>
-        <Button colorstyle="gradient">wersja demo</Button>
+        <Button colorstyle="gradient" onClick={() => navigate("../dashboard")}>wersja demo</Button>
       </Header>
   )
 }

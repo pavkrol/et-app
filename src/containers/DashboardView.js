@@ -72,7 +72,7 @@ const NavButton = styled.button`
 `;
 
 const DashboardView = ({userProfile, userTransactions, transactionFn}) => {
-  
+  console.log(userProfile);
   const [activeView, setActiveView] = useState("overall");
   const [transactionModal, setTransactionModal] = useState(false);
 
