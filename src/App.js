@@ -14,11 +14,13 @@ const App = () => {
   const [user, setUser] = useState({});
   const [finance, setData] = useState({});
   const [transactions, setTransactions] = useState([]);
+  const [aggregatedData, setAggregatedData] = useState({});
 
   useEffect(() => {
     const storageUser = getUsersFromStorage();
     updateUserData(storageUser.userData);
     updateFinancialData(storageUser.financeData);
+    updateAggregatedData(storageUser.aggregatedData);
     updateTransactions(storageUser.transactions[0]);
     updateTransactions(storageUser.transactions[1]);
     updateTransactions(storageUser.transactions[2]);
@@ -36,6 +38,12 @@ const App = () => {
       ...finance,
       financeData
     });
+  }
+
+  const updateAggregatedData = (aggregatedData) => {
+    setAggregatedData(
+      aggregatedData
+    );
   }
 
   const updateTransactions = (trx) => {
@@ -67,7 +75,8 @@ const App = () => {
     }
   }
 
-  const userProfile = {...user, ...finance, transactions: transactions, aggregatedData: temporaryUser.aggregatedData};
+  const userProfile = {...user, ...finance, transactions: transactions, aggregatedData: aggregatedData};
+  
   const getUsersFromStorage = () => {
     return JSON.parse(localStorage.getItem('users'));
   }
@@ -78,7 +87,7 @@ const App = () => {
       <GlobalStyle/>
       <Router>
         <LandingPage path="/" />
-        <RegisterPage path="register/*" dataFn={updateUserData} finFn={updateFinancialData}/>
+        <RegisterPage path="register/*" dataFn={updateUserData} finFn={updateFinancialData} aggrFn={updateAggregatedData}/>
         <DashboardView path="dashboard/*" userProfile={userProfile} userTransactions={transactions} transactionFn={updateTransactions}/>
       </Router>
       </>

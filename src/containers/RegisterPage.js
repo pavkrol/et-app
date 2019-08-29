@@ -1,13 +1,12 @@
 import React from 'react';
-import styled from "styled-components";
 import HeaderWrapper from "./HeaderWrapper";
 import MainContent from './MainContent';
 
-const RegisterPage = ({dataFn, finFn}) => {
+const RegisterPage = ({dataFn, finFn, aggrFn}) => {
   return (
     <>
       <HeaderWrapper />
-      <MainContent dataFn={dataFn} finFn={finFn}/>
+      <MainContent dataFn={dataFn} finFn={finFn} aggrFn={aggrFn}/>
     </>
   )
 };

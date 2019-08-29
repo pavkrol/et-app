@@ -100,7 +100,6 @@ export const temporaryUser = {
   aggregatedData: {
     lastYearLoss: "4534",
     taxesThisYear: "463",
-    vatThisYear: "6554",
     insuranceThisYear: "554"
   },
   transactions: [

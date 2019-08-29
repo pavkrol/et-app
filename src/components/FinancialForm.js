@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useState } from 'react';
 import styled, {css} from 'styled-components';
 import Description from '../components/Description';
 import Input from '../components/Input';
@@ -58,7 +58,7 @@ const updateFinances = (state, action) => {
   return state;
 };
 
-const FinancialForm = ({finFn}) => {
+const FinancialForm = ({finFn, aggrFn}) => {
 
   const currentDate = new Date();
   const monthsNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -66,17 +66,26 @@ const FinancialForm = ({finFn}) => {
   const monthsArray = monthsNames.slice(0, monthsCount);
 
   const [finances, dispatch] = useReducer(updateFinances, initialData);
+  const [lastYearLoss, setLastYearLoss] = useState("");
+  const [taxesThisYear, setTaxesThisYear] = useState("");
+  const [insuranceThisYear, setInsuranceThisYear] = useState("");
 
   return (
     <Form noValidate onSubmit={(e) => {
       e.preventDefault();
       finFn(finances);
+      const aggregatedData = {
+        lastYearLoss: lastYearLoss,
+        taxesThisYear: taxesThisYear,
+        insuranceThisYear: insuranceThisYear
+      }
+      aggrFn(aggregatedData);
       navigate("../dashboard");
     }}>
       <Description>W kolejnym kroku uzupełnij dane finansowe Twojej firmy za bieżący rok. Wszystkie poniższe kwoty podaj w PLN.</Description>
       <Field>
-        <Label inline>1. Strata z roku ubiegłego (jeśli występuje):</Label>
-        <Input type="text" name="lastYearLoss" onChange={(e) => console.log(e.target.value)}/>
+        <Label inline htmlFor="lastYearLoss">1. Strata z roku ubiegłego (jeśli występuje):</Label>
+        <Input type="text" name="lastYearLoss" onChange={(e) => setLastYearLoss(e.target.value)}/>
       </Field>
       {
         monthsArray.map((element) => (
@@ -84,19 +93,19 @@ const FinancialForm = ({finFn}) => {
           <Month>{element}</Month>
           <FieldsWrapper>
             <Field small>   
-              <Label inline>Przychód (brutto):</Label>
+              <Label inline htmlFor="income_gross">Przychód (brutto):</Label>
               <Input type="text" name="income_gross" data-month={element} onChange={(e) => dispatch({type: 'update', id: e.target.dataset.month, key: e.target.name, value: e.target.value})}/>
             </Field>
             <Field small>
-              <Label inline>Przychód (netto):</Label>
+              <Label inline htmlFor="income">Przychód (netto):</Label>
               <Input type="text" name="income" data-month={element} onChange={(e) => dispatch({type: 'update', id: e.target.dataset.month, key: e.target.name, value: e.target.value})}/>
             </Field>
             <Field small>
-              <Label inline>Koszty (brutto):</Label>
+              <Label inline htmlFor="costs_gross">Koszty (brutto):</Label>
               <Input type="text" name="costs_gross" data-month={element} onChange={(e) => dispatch({type: 'update', id: e.target.dataset.month, key: e.target.name, value: e.target.value})}/>
             </Field>
             <Field small>
-              <Label inline>Koszty (netto):</Label>
+              <Label inline htmlFor="costs">Koszty (netto):</Label>
               <Input type="text" name="costs" data-month={element} onChange={(e) => dispatch({type: 'update', id: e.target.dataset.month, key: e.target.name, value: e.target.value})}/>
             </Field>
           </FieldsWrapper> 
@@ -104,16 +113,12 @@ const FinancialForm = ({finFn}) => {
         ))
       }
       <Field>
-        <Label inline>2. Suma wpłaconych zaliczek na podatek dochodowy:</Label>
-        <Input type="text" name="incomeTax"/>
+        <Label inline htmlFor="incomeTax">2. Suma wpłaconych zaliczek na podatek dochodowy:</Label>
+        <Input type="text" name="incomeTax" onChange={(e) => setTaxesThisYear(e.target.value)}/>
       </Field>
       <Field>
-        <Label inline>3. Suma wpłat na podatek VAT:</Label>
-        <Input type="text" name="vatTax"/>
-      </Field>
-      <Field>
-        <Label inline>4. Suma wpłat na ubezpieczenie społeczne:</Label>
-        <Input type="text" name="socialInsurance"/>
+        <Label inline htmlFor="socialInsurance">3. Suma wpłat na ubezpieczenie społeczne:</Label>
+        <Input type="text" name="socialInsurance" onChange={(e) => setInsuranceThisYear(e.target.value)}/>
       </Field>
       <Button type="submit" as="button" colorstyle="full_green">Dalej</Button>
     </Form>

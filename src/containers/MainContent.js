@@ -28,14 +28,14 @@ const Title = styled.h2`
   color: ${({theme}) => theme.colors.darkGreen};
 `;
 
-const MainContent = ({dataFn, finFn}) => {
+const MainContent = ({dataFn, finFn, aggrFn}) => {
   return (
     <Content>
       <FormWrapper>
         <Title>Rejestracja</Title>
         <Router>
           <RegisterForm path="/" dataFn={dataFn}/>
-          <FinancialForm path="financial" finFn={finFn}/>
+          <FinancialForm path="financial" finFn={finFn} aggrFn={aggrFn}/>
         </Router> 
       </FormWrapper>
     </Content>
