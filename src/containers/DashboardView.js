@@ -4,9 +4,10 @@ import Logo from '../components/Logo';
 import ProfilePhoto from '../components/ProfilePhoto';
 import OverallData from '../containers/OverallData';
 import AddTransactionModal from '../components/AddTransactionModal';
+import {useSpring, animated} from 'react-spring';
 
 
-const DashboardWrapper = styled.main`
+const DashboardWrapper = styled(animated.main)`
   display: grid;
   grid-template-columns: 325px 1fr;
   grid-template-rows: 75px calc(100vh - 75px);
@@ -76,8 +77,17 @@ const DashboardView = ({userProfile, userTransactions, transactionFn}) => {
   const [activeView, setActiveView] = useState("overall");
   const [transactionModal, setTransactionModal] = useState(false);
 
+  const fade = useSpring({
+    from: {
+      opacity: 0
+    },
+    to: {
+      opacity: 1
+    }
+  });
+
   return (
-    <DashboardWrapper>
+    <DashboardWrapper style={fade}>
       <LogoWrapper>
         <Logo/>
       </LogoWrapper>

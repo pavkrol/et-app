@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import RegisterForm from '../components/RegisterForm';
 import FinancialForm from '../components/FinancialForm';
 import {Router} from '@reach/router';
+import {useSpring, animated} from 'react-spring';
 
 
 const Content = styled.section`
@@ -13,7 +14,7 @@ const Content = styled.section`
   align-items: center;
 `;
 
-const FormWrapper = styled.div`
+const FormWrapper = styled(animated.div)`
   width: 900px;
   background-color: white;
   box-shadow: 0 20px 40px rgba(0,0,0,0.25);
@@ -29,9 +30,18 @@ const Title = styled.h2`
 `;
 
 const MainContent = ({dataFn, finFn, aggrFn}) => {
+  const fade = useSpring({
+    from: {
+      opacity: 0
+    },
+    to: {
+      opacity: 1
+    }
+  });
+
   return (
     <Content>
-      <FormWrapper>
+      <FormWrapper style={fade}>
         <Title>Rejestracja</Title>
         <Router>
           <RegisterForm path="/" dataFn={dataFn}/>
