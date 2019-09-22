@@ -8,9 +8,17 @@ import { Router } from "@reach/router";
 import RegisterPage from './containers/RegisterPage';
 import DashboardView from './containers/DashboardView';
 import {temporaryUser} from './data/temporaryUser';
+import {useSpring, animated} from 'react-spring';
 
 const App = () => {
-
+  const fade = useSpring({
+    from: {
+      opacity: 0
+    },
+    to: {
+      opacity: 1
+    }
+  });
   const [user, setUser] = useState({});
   const [finance, setData] = useState({});
   const [transactions, setTransactions] = useState([]);
@@ -82,16 +90,18 @@ const App = () => {
   }
 
   return (
-    <ThemeProvider theme={theme}>
-      <>
-      <GlobalStyle/>
-      <Router>
-        <LandingPage path="/" />
-        <RegisterPage path="register/*" dataFn={updateUserData} finFn={updateFinancialData} aggrFn={updateAggregatedData}/>
-        <DashboardView path="dashboard/*" userProfile={userProfile} userTransactions={transactions} transactionFn={updateTransactions}/>
-      </Router>
-      </>
-    </ThemeProvider>
+    <animated.div style={fade}>
+      <ThemeProvider theme={theme}>
+        <>
+        <GlobalStyle/>
+        <Router>
+          <LandingPage path="/" />
+          <RegisterPage path="register/*" dataFn={updateUserData} finFn={updateFinancialData} aggrFn={updateAggregatedData}/>
+          <DashboardView path="dashboard/*" userProfile={userProfile} userTransactions={transactions} transactionFn={updateTransactions}/>
+        </Router>
+        </>
+      </ThemeProvider>
+    </animated.div>
   )
 };
 

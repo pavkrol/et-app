@@ -4,6 +4,7 @@ import Label from '../components/Label';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import Select from '../components/Select';
+import {useSpring, animated} from 'react-spring';
 
 const ModalWrapper = styled.div`
   position: absolute;
@@ -14,7 +15,7 @@ const ModalWrapper = styled.div`
   left: 0;
 `;
 
-const Modal = styled.div`
+const Modal = styled(animated.div)`
   position: relative;
   top: calc(50% - 200px);
   left: calc(50% - 300px);
@@ -70,7 +71,16 @@ const InputField = styled.div`
 `;
 
 const AddTransactionModal = ({modalFn, transactionFn}) => {
-  
+  const fade = useSpring({
+    from: {
+      opacity: 0,
+      transform: 'translate3d(0, -40px, 0)'
+    },
+    to: {
+      opacity: 1,
+      transform: 'translate3d(0, 0, 0)'
+    }
+  });
   const [date, setDate] = useState("");
   const [documentNumber, setDocumentNumber] = useState("");
   const [value, setValue] = useState("");
@@ -109,7 +119,7 @@ const AddTransactionModal = ({modalFn, transactionFn}) => {
 
   return(
     <ModalWrapper>
-      <Modal>
+      <Modal style={fade}>
         <CloseModal onClick={() => modalFn(false)}>x</CloseModal>
         <Title>Dodawanie transakcji:</Title>
         <ModalForm onSubmit={(e) => {

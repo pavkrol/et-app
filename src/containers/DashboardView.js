@@ -87,7 +87,9 @@ const DashboardView = ({userProfile, userTransactions, transactionFn}) => {
       <Aside>
         <NavigationList>
           <NavItem>
-            <NavButton active={activeView === "overall" ? true : false} onClick={() => setActiveView("overall")}>Pulpit</NavButton>
+            <NavButton active={activeView === "overall" ? true : false} onClick={() => setActiveView("overall")}>
+              Pulpit
+            </NavButton>
           </NavItem>
           <NavItem>
             <NavButton active={activeView === "taxes" ? true : false} onClick={() => setActiveView("taxes")}>Podatki</NavButton>
@@ -109,7 +111,7 @@ const DashboardView = ({userProfile, userTransactions, transactionFn}) => {
         ) : ("") }
         {transactionModal ? 
         (
-          <AddTransactionModal modalFn={setTransactionModal} transactionFn={transactionFn}/>
+          <AddTransactionModal modalFn={setTransactionModal} transactionFn={transactionFn} transactionModal={transactionModal}/>
         ):(
           ""
         )
