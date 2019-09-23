@@ -86,14 +86,14 @@ export const temporaryUser = {
     }
   ],
   userData: {
-    NIP: "9570884466",
+    NIP: "3811903430",
     PIT_freq: "kwartalnie",
-    REGON: "365095696",
+    REGON: "615058124",
     VAT_freq: "miesięcznie",
     ZUS: "mały zus",
     address: "Lawendowe Wzgórze 20/7",
     city: "Gdańsk",
-    company: "PAKRO Paweł Król",
+    company: "TESTOWA firma sp. z o.o.",
     postal: "80175",
     start_date: "2017-07-11",
   },

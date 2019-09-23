@@ -5,6 +5,7 @@ import ProfilePhoto from '../components/ProfilePhoto';
 import OverallData from '../containers/OverallData';
 import AddTransactionModal from '../components/AddTransactionModal';
 import {useSpring, animated} from 'react-spring';
+import { UserContext } from '../data/UserContext';
 
 
 const DashboardWrapper = styled(animated.main)`
@@ -72,11 +73,9 @@ const NavButton = styled.button`
   }
 `;
 
-const DashboardView = ({userProfile, userTransactions, transactionFn}) => {
-  console.log(userProfile);
+const DashboardView = ({ userTransactions, transactionFn}) => {
   const [activeView, setActiveView] = useState("overall");
   const [transactionModal, setTransactionModal] = useState(false);
-
   const fade = useSpring({
     from: {
       opacity: 0
@@ -87,48 +86,51 @@ const DashboardView = ({userProfile, userTransactions, transactionFn}) => {
   });
 
   return (
-    <DashboardWrapper style={fade}>
-      <LogoWrapper>
-        <Logo/>
-      </LogoWrapper>
-      <DashboardHeader>
-        <ProfilePhoto companyName={userProfile.userData.company}/>
-      </DashboardHeader>
-      <Aside>
-        <NavigationList>
-          <NavItem>
-            <NavButton active={activeView === "overall" ? true : false} onClick={() => setActiveView("overall")}>
-              Pulpit
-            </NavButton>
-          </NavItem>
-          <NavItem>
-            <NavButton active={activeView === "taxes" ? true : false} onClick={() => setActiveView("taxes")}>Podatki</NavButton>
-          </NavItem>
-          <NavItem>
-            <NavButton active={activeView === "invoices" ? true : false} onClick={() => setActiveView("invoices")}>Faktury</NavButton>
-          </NavItem>
-          <NavItem>
-            <NavButton active={activeView === "costs" ? true : false} onClick={() => setActiveView("costs")}>Wydatki</NavButton>
-          </NavItem>
-          <NavItem>
-            <NavButton active={activeView === "tasks" ? true : false} onClick={() => setActiveView("tasks")}>Zadania</NavButton>
-          </NavItem>
-        </NavigationList>
-      </Aside>
-      <DashboardContent>
-        {activeView === "overall" ? (
-          <OverallData userProfile={userProfile} modalFn={setTransactionModal} userTransactions={userTransactions}/>
-        ) : ("") }
-        {transactionModal ? 
-        (
-          <AddTransactionModal modalFn={setTransactionModal} transactionFn={transactionFn} transactionModal={transactionModal}/>
-        ):(
-          ""
-        )
-        }
-
-      </DashboardContent>
-    </DashboardWrapper>
+          <DashboardWrapper style={fade} >
+          <LogoWrapper>
+            <Logo/>
+          </LogoWrapper>
+          <DashboardHeader>
+            <UserContext.Consumer>
+              {value => <ProfilePhoto companyName={value.userData.company}/>}
+            </UserContext.Consumer> 
+          </DashboardHeader>
+          <Aside>
+            <NavigationList>
+              <NavItem>
+                <NavButton active={activeView === "overall" ? true : false} onClick={() => setActiveView("overall")}>
+                  Pulpit
+                </NavButton>
+              </NavItem>
+              <NavItem>
+                <NavButton active={activeView === "taxes" ? true : false} onClick={() => setActiveView("taxes")}>Podatki</NavButton>
+              </NavItem>
+              <NavItem>
+                <NavButton active={activeView === "invoices" ? true : false} onClick={() => setActiveView("invoices")}>Faktury</NavButton>
+              </NavItem>
+              <NavItem>
+                <NavButton active={activeView === "costs" ? true : false} onClick={() => setActiveView("costs")}>Wydatki</NavButton>
+              </NavItem>
+              <NavItem>
+                <NavButton active={activeView === "tasks" ? true : false} onClick={() => setActiveView("tasks")}>Zadania</NavButton>
+              </NavItem>
+            </NavigationList>
+          </Aside>
+          <DashboardContent>
+            {activeView === "overall" 
+            ? ( 
+              <UserContext.Consumer>
+                {value => (
+                  <OverallData userProfile={value} modalFn={setTransactionModal} userTransactions={userTransactions}/>
+                )}
+              </UserContext.Consumer>
+            ) : ("") }
+            {transactionModal ? 
+            (
+              <AddTransactionModal modalFn={setTransactionModal} transactionFn={transactionFn} transactionModal={transactionModal}/>
+            ):("")}
+          </DashboardContent>
+        </DashboardWrapper>
   )
 };
 

@@ -9,8 +9,10 @@ import RegisterPage from './containers/RegisterPage';
 import DashboardView from './containers/DashboardView';
 import {temporaryUser} from './data/temporaryUser';
 import {useSpring, animated} from 'react-spring';
+import {UserContext} from './data/UserContext';
 
 const App = () => {
+  
   const fade = useSpring({
     from: {
       opacity: 0
@@ -19,20 +21,11 @@ const App = () => {
       opacity: 1
     }
   });
-  const [user, setUser] = useState({});
-  const [finance, setData] = useState({});
-  const [transactions, setTransactions] = useState([]);
-  const [aggregatedData, setAggregatedData] = useState({});
-
-  useEffect(() => {
-    const storageUser = getUsersFromStorage();
-    updateUserData(storageUser.userData);
-    updateFinancialData(storageUser.financeData);
-    updateAggregatedData(storageUser.aggregatedData);
-    updateTransactions(storageUser.transactions[0]);
-    updateTransactions(storageUser.transactions[1]);
-    updateTransactions(storageUser.transactions[2]);
-  }, []);
+  
+  const [user, setUser] = useState(temporaryUser.userData);
+  const [finance, setData] = useState(temporaryUser.financeData);
+  const [transactions, setTransactions] = useState(temporaryUser.transactions);
+  const [aggregatedData, setAggregatedData] = useState(temporaryUser.aggregatedData);
 
   const updateUserData = (userData) => {
     setUser({
@@ -58,49 +51,22 @@ const App = () => {
     setTransactions(transactions => [...transactions, trx]);
   }
 
-  const storageAvailable = (type) => {
-    let storage;
-    try {
-        storage = window[type];
-        var x = '__storage_test__';
-        storage.setItem(x, x);
-        storage.removeItem(x);
-        return true;
-    }
-    catch(e) {
-        return e instanceof DOMException && (
-            e.code === 22 ||
-            e.code === 1014 ||
-            e.name === 'QuotaExceededError' ||
-            e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
-            (storage && storage.length !== 0);
-    }
-  }
-
-  const addUserToStorage = (user) => {
-    if (storageAvailable('localStorage')) {
-      localStorage.setItem('users', JSON.stringify(user));
-    }
-  }
-
-  const userProfile = {...user, ...finance, transactions: transactions, aggregatedData: aggregatedData};
-  
-  const getUsersFromStorage = () => {
-    return JSON.parse(localStorage.getItem('users'));
-  }
+  const userProfile = {userData: user, financeData: finance, transactions: transactions, aggregatedData: aggregatedData};
 
   return (
     <animated.div style={fade}>
+      <UserContext.Provider value={userProfile}>
       <ThemeProvider theme={theme}>
         <>
         <GlobalStyle/>
         <Router>
           <LandingPage path="/" />
           <RegisterPage path="register/*" dataFn={updateUserData} finFn={updateFinancialData} aggrFn={updateAggregatedData}/>
-          <DashboardView path="dashboard/*" userProfile={userProfile} userTransactions={transactions} transactionFn={updateTransactions}/>
+          <DashboardView path="dashboard/*" userTransactions={transactions} transactionFn={updateTransactions}/>
         </Router>
         </>
       </ThemeProvider>
+      </UserContext.Provider>
     </animated.div>
   )
 };

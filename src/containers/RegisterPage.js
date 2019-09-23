@@ -4,10 +4,10 @@ import MainContent from './MainContent';
 
 const RegisterPage = ({dataFn, finFn, aggrFn}) => {
   return (
-    <div>
+    <>
       <HeaderWrapper />
       <MainContent dataFn={dataFn} finFn={finFn} aggrFn={aggrFn}/>
-    </div>
+    </>
   )
 };
 
