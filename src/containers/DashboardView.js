@@ -5,8 +5,7 @@ import ProfilePhoto from '../components/ProfilePhoto';
 import OverallData from '../containers/OverallData';
 import AddTransactionModal from '../components/AddTransactionModal';
 import {useSpring, animated} from 'react-spring';
-import { UserContext } from '../data/UserContext';
-
+import { useStateValue } from '../data/StateProvider';
 
 const DashboardWrapper = styled(animated.main)`
   display: grid;
@@ -73,7 +72,7 @@ const NavButton = styled.button`
   }
 `;
 
-const DashboardView = ({ userTransactions, transactionFn}) => {
+const DashboardView = ({ userTransactions }) => {
   const [activeView, setActiveView] = useState("overall");
   const [transactionModal, setTransactionModal] = useState(false);
   const fade = useSpring({
@@ -85,15 +84,16 @@ const DashboardView = ({ userTransactions, transactionFn}) => {
     }
   });
 
+  const [userProfile, dispatch] = useStateValue();
+  console.log(userProfile);
+
   return (
           <DashboardWrapper style={fade} >
           <LogoWrapper>
             <Logo/>
           </LogoWrapper>
           <DashboardHeader>
-            <UserContext.Consumer>
-              {value => <ProfilePhoto companyName={value.userData.company}/>}
-            </UserContext.Consumer> 
+              <ProfilePhoto companyName={userProfile.userData.company}/>
           </DashboardHeader>
           <Aside>
             <NavigationList>
@@ -119,15 +119,11 @@ const DashboardView = ({ userTransactions, transactionFn}) => {
           <DashboardContent>
             {activeView === "overall" 
             ? ( 
-              <UserContext.Consumer>
-                {value => (
-                  <OverallData userProfile={value} modalFn={setTransactionModal} userTransactions={userTransactions}/>
-                )}
-              </UserContext.Consumer>
+            <OverallData modalFn={setTransactionModal} userTransactions={userTransactions}/> 
             ) : ("") }
             {transactionModal ? 
             (
-              <AddTransactionModal modalFn={setTransactionModal} transactionFn={transactionFn} transactionModal={transactionModal}/>
+              <AddTransactionModal modalFn={setTransactionModal} transactionModal={transactionModal}/>
             ):("")}
           </DashboardContent>
         </DashboardWrapper>

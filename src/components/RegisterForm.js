@@ -7,6 +7,7 @@ import Input from './Input';
 import { inputsArray } from '../data/inputsArray';
 import Description from './Description';
 import {validateNIP, validateREGON} from '../helpers/validation_rules';
+import { useStateValue } from '../data/StateProvider';
 
 
 const Form = styled.form`
@@ -45,8 +46,9 @@ const Error = styled.p`
   left: 5px;
 `;
 
-const RegisterForm = ({dataFn}) => {
+const RegisterForm = () => {
 
+  const [userProfile, dispatch] = useStateValue();
   const [company, setCompany] = useState({});
   const [errors, setError] = useState({});
   
@@ -55,6 +57,7 @@ const RegisterForm = ({dataFn}) => {
         [key]: value,
       }
     );
+    console.log(company);
   };
 
   const validateFields = (e, company) => {
@@ -89,12 +92,16 @@ const RegisterForm = ({dataFn}) => {
       fieldsErrors.REGON = true;
     }
     setError(fieldsErrors);
-    dataFn(company);
-    if(fieldsAreValid) navigate("register/financial");
+    return fieldsAreValid;
   };
 
   return(
-    <Form noValidate onSubmit={(e) => validateFields(e, company)}>
+    <Form noValidate onSubmit={(e) => {
+      if(validateFields(e, company)) {
+        dispatch({type: 'updateUserData', value: company});
+        navigate("register/financial");
+      };
+    }}>
       <Description>Żeby rozpocząć pracę z programem konieczne jest podanie kilku danych dotyczących Twojej działalności.</Description>
       {
         inputsArray.map((element,index) => {

@@ -2,11 +2,11 @@ import React from 'react';
 import HeaderWrapper from "./HeaderWrapper";
 import MainContent from './MainContent';
 
-const RegisterPage = ({dataFn, finFn, aggrFn}) => {
+const RegisterPage = () => {
   return (
     <>
       <HeaderWrapper />
-      <MainContent dataFn={dataFn} finFn={finFn} aggrFn={aggrFn}/>
+      <MainContent />
     </>
   )
 };

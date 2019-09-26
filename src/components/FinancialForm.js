@@ -6,6 +6,7 @@ import Label from '../components/Label';
 import Button from '../components/Button';
 import {initialData} from '../data/initialData';
 import { navigate } from "@reach/router";
+import { useStateValue } from '../data/StateProvider';
 
 const Form = styled.form`
   display: flex;
@@ -58,7 +59,7 @@ const updateFinances = (state, action) => {
   return state;
 };
 
-const FinancialForm = ({finFn, aggrFn}) => {
+const FinancialForm = () => {
 
   const currentDate = new Date();
   const monthsNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -70,16 +71,20 @@ const FinancialForm = ({finFn, aggrFn}) => {
   const [taxesThisYear, setTaxesThisYear] = useState("");
   const [insuranceThisYear, setInsuranceThisYear] = useState("");
 
+  const [userProfile, dispatchToState] = useStateValue();
+
   return (
     <Form noValidate onSubmit={(e) => {
       e.preventDefault();
-      finFn(finances);
+
       const aggregatedData = {
         lastYearLoss: lastYearLoss,
         taxesThisYear: taxesThisYear,
         insuranceThisYear: insuranceThisYear
       }
-      aggrFn(aggregatedData);
+
+      dispatchToState({type: 'updateFinance', value: finances});
+      dispatchToState({type: 'updateAggregated', value: aggregatedData});
       navigate("../dashboard");
     }}>
       <Description>W kolejnym kroku uzupełnij dane finansowe Twojej firmy za bieżący rok. Wszystkie poniższe kwoty podaj w PLN.</Description>

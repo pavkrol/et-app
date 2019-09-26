@@ -29,7 +29,7 @@ const Title = styled.h2`
   color: ${({theme}) => theme.colors.darkGreen};
 `;
 
-const MainContent = ({dataFn, finFn, aggrFn}) => {
+const MainContent = () => {
   const fade = useSpring({
     from: {
       opacity: 0
@@ -44,8 +44,8 @@ const MainContent = ({dataFn, finFn, aggrFn}) => {
       <FormWrapper style={fade}>
         <Title>Rejestracja</Title>
         <Router>
-          <RegisterForm path="/" dataFn={dataFn}/>
-          <FinancialForm path="financial" finFn={finFn} aggrFn={aggrFn}/>
+          <RegisterForm path="/"/>
+          <FinancialForm path="financial"/>
         </Router> 
       </FormWrapper>
     </Content>

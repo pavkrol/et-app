@@ -5,6 +5,7 @@ import Input from '../components/Input';
 import Button from '../components/Button';
 import Select from '../components/Select';
 import {useSpring, animated} from 'react-spring';
+import { useStateValue } from '../data/StateProvider';
 
 const ModalWrapper = styled.div`
   position: absolute;
@@ -70,7 +71,7 @@ const InputField = styled.div`
   align-items: center;
 `;
 
-const AddTransactionModal = ({modalFn, transactionFn}) => {
+const AddTransactionModal = ({modalFn}) => {
   const fade = useSpring({
     from: {
       opacity: 0,
@@ -90,6 +91,8 @@ const AddTransactionModal = ({modalFn, transactionFn}) => {
   const [address, setAddress] = useState("");
   const [nip, setNip] = useState("");
   const [type, setType] = useState("przychód");
+
+  const [userProfile, dispatch] = useStateValue();
   
   const updateValueGross = () => {
     const vat = document.getElementById("transaction_vat");
@@ -113,8 +116,7 @@ const AddTransactionModal = ({modalFn, transactionFn}) => {
       document_nr: documentNumber,
       NIP_number: nip
     }
-    console.log(newTransaction);
-    transactionFn(newTransaction);
+    dispatch({type: 'updateTransactions', value: newTransaction});
   };
 
   return(

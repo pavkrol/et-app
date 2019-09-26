@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import DataBox from '../components/DataBox';
 import TransactionsBox from '../components/TransactionsBox';
+import { useStateValue } from '../data/StateProvider';
 
 const Wrapper = styled.div`
   display: flex;
@@ -11,8 +12,10 @@ const Wrapper = styled.div`
   }
 `;
 
-const OverallData = ({userProfile, modalFn, userTransactions}) => {
+const OverallData = ({ modalFn, userTransactions }) => {
  
+  const [userProfile, dispatch] = useStateValue();
+  
   const incomeSum = userProfile.financeData.reduce((prev, next) => {
     return parseFloat(prev) + parseFloat(next.income);
   }, 0);
@@ -39,7 +42,7 @@ const OverallData = ({userProfile, modalFn, userTransactions}) => {
     <Wrapper>
       <DataBox data={currentMonth} description="Bieżący miesiąc:" currentMonth modalFn={modalFn}/>
       <DataBox data={aggregatedData} description="Od początku roku:"/>
-      <TransactionsBox transactions={userTransactions}/>
+      <TransactionsBox transactions={userProfile.transactions}/>
     </Wrapper>
   )
 };

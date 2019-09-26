@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { render } from "react-dom";
 import LandingPage from "./layout/LandingPage";
-import {ThemeProvider} from 'styled-components';
+import { ThemeProvider } from 'styled-components';
 import GlobalStyle from "./layout/GlobalStyle";
 import { theme } from "./layout/theme";
 import { Router } from "@reach/router";
 import RegisterPage from './containers/RegisterPage';
 import DashboardView from './containers/DashboardView';
-import {temporaryUser} from './data/temporaryUser';
-import {useSpring, animated} from 'react-spring';
-import {UserContext} from './data/UserContext';
+import { temporaryUser } from './data/temporaryUser';
+import { useSpring, animated } from 'react-spring';
+import { StateProvider } from './data/StateProvider';
 
 const App = () => {
   
@@ -27,47 +27,50 @@ const App = () => {
   const [transactions, setTransactions] = useState(temporaryUser.transactions);
   const [aggregatedData, setAggregatedData] = useState(temporaryUser.aggregatedData);
 
-  const updateUserData = (userData) => {
-    setUser({
-      ...user,
-      userData
-    });
-  }
+  const initialState = {userData: user, financeData: finance, transactions: transactions, aggregatedData: aggregatedData};
 
-  const updateFinancialData = (financeData) => {
-    setData({
-      ...finance,
-      financeData
-    });
+  const reducer = (state, action) => {
+    switch (action.type) {
+      case 'updateUserData':
+        return {
+          ...state,
+          userData: action.value
+        };
+      case 'updateTransactions':
+        return {
+          ...state,
+          transactions: [...transactions, action.value]
+        };
+      case 'updateFinance':
+        return {
+          ...state,
+          financeData: action.value
+        };
+      case 'updateAggregated':
+        return {
+          ...state,
+          aggregatedData: action.value
+        };
+      default: 
+        return state;
+    }
   }
-
-  const updateAggregatedData = (aggregatedData) => {
-    setAggregatedData(
-      aggregatedData
-    );
-  }
-
-  const updateTransactions = (trx) => {
-    setTransactions(transactions => [...transactions, trx]);
-  }
-
-  const userProfile = {userData: user, financeData: finance, transactions: transactions, aggregatedData: aggregatedData};
 
   return (
-    <animated.div style={fade}>
-      <UserContext.Provider value={userProfile}>
-      <ThemeProvider theme={theme}>
-        <>
-        <GlobalStyle/>
-        <Router>
-          <LandingPage path="/" />
-          <RegisterPage path="register/*" dataFn={updateUserData} finFn={updateFinancialData} aggrFn={updateAggregatedData}/>
-          <DashboardView path="dashboard/*" userTransactions={transactions} transactionFn={updateTransactions}/>
-        </Router>
-        </>
-      </ThemeProvider>
-      </UserContext.Provider>
-    </animated.div>
+    <StateProvider initialState={initialState} reducer={reducer}>
+      <animated.div style={fade}>
+        <ThemeProvider theme={theme}>
+          <>
+          <GlobalStyle/>
+          <Router>
+            <LandingPage path="/" />
+            <RegisterPage path="register/*"/>
+            <DashboardView path="dashboard/*" userTransactions={transactions}/>
+          </Router>
+          </>
+        </ThemeProvider>
+      </animated.div>
+    </StateProvider>
   )
 };
 
