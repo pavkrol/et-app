@@ -21,13 +21,8 @@ const App = () => {
       opacity: 1
     }
   });
-  
-  const [user, setUser] = useState(temporaryUser.userData);
-  const [finance, setData] = useState(temporaryUser.financeData);
-  const [transactions, setTransactions] = useState(temporaryUser.transactions);
-  const [aggregatedData, setAggregatedData] = useState(temporaryUser.aggregatedData);
 
-  const initialState = {userData: user, financeData: finance, transactions: transactions, aggregatedData: aggregatedData};
+  const initialState = {userData: temporaryUser.userData, financeData: temporaryUser.financeData, transactions: temporaryUser.transactions, aggregatedData: temporaryUser.aggregatedData};
 
   const reducer = (state, action) => {
     switch (action.type) {
@@ -39,7 +34,7 @@ const App = () => {
       case 'updateTransactions':
         return {
           ...state,
-          transactions: [...transactions, action.value]
+          transactions: [...state.transactions, action.value]
         };
       case 'updateFinance':
         return {
@@ -65,7 +60,7 @@ const App = () => {
           <Router>
             <LandingPage path="/" />
             <RegisterPage path="register/*"/>
-            <DashboardView path="dashboard/*" userTransactions={transactions}/>
+            <DashboardView path="dashboard/*"/>
           </Router>
           </>
         </ThemeProvider>

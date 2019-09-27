@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import styled, {css} from 'styled-components';
 import Logo from '../components/Logo';
 import ProfilePhoto from '../components/ProfilePhoto';
+import Taxes from '../containers/Taxes';
 import OverallData from '../containers/OverallData';
 import AddTransactionModal from '../components/AddTransactionModal';
 import {useSpring, animated} from 'react-spring';
@@ -72,7 +73,7 @@ const NavButton = styled.button`
   }
 `;
 
-const DashboardView = ({ userTransactions }) => {
+const DashboardView = () => {
   const [activeView, setActiveView] = useState("overall");
   const [transactionModal, setTransactionModal] = useState(false);
   const fade = useSpring({
@@ -118,9 +119,11 @@ const DashboardView = ({ userTransactions }) => {
           </Aside>
           <DashboardContent>
             {activeView === "overall" 
-            ? ( 
-            <OverallData modalFn={setTransactionModal} userTransactions={userTransactions}/> 
-            ) : ("") }
+            ? <OverallData modalFn={setTransactionModal}/> 
+            : null}
+            {activeView === "taxes" 
+            ? <Taxes/> 
+            : null}
             {transactionModal ? 
             (
               <AddTransactionModal modalFn={setTransactionModal} transactionModal={transactionModal}/>

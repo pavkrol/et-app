@@ -12,7 +12,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const OverallData = ({ modalFn, userTransactions }) => {
+const OverallData = ({ modalFn }) => {
  
   const [userProfile, dispatch] = useStateValue();
   
@@ -24,7 +24,7 @@ const OverallData = ({ modalFn, userTransactions }) => {
     return parseFloat(prev) + parseFloat(next.costs);
   }, 0);
 
-  const taxesSum = parseFloat(userProfile.aggregatedData.taxesThisYear) + parseFloat(userProfile.aggregatedData.vatThisYear);
+  const taxesSum = parseFloat(userProfile.aggregatedData.taxesThisYear);
 
   const aggregatedData = {
     income: incomeSum,
@@ -40,8 +40,8 @@ const OverallData = ({ modalFn, userTransactions }) => {
 
   return(
     <Wrapper>
-      <DataBox data={currentMonth} description="Bieżący miesiąc:" currentMonth modalFn={modalFn}/>
-      <DataBox data={aggregatedData} description="Od początku roku:"/>
+      <DataBox data={currentMonth} currentMonth modalFn={modalFn}>Bieżący miesiąc:</DataBox>
+      <DataBox data={aggregatedData}>Od początku roku:</DataBox>
       <TransactionsBox transactions={userProfile.transactions}/>
     </Wrapper>
   )

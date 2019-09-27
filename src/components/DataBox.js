@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Tile from '../components/Tile';
+import Title from './Title';
 
 const Wrapper = styled.div`
   display: grid;
@@ -9,13 +10,6 @@ const Wrapper = styled.div`
   grid-gap: 15px;
   padding: 35px;
   background-color: white;
-`;
-
-const Title = styled.h2`
-  font-size: 20px;
-  font-family: ${({theme}) => theme.font.main};
-  font-weight: 700;
-  grid-column: span 3;
 `;
 
 const AddTransaction = styled.button`
@@ -47,16 +41,16 @@ const AddTransaction = styled.button`
   }
 `;
 
-const DataBox = ({data, description, modalFn, ...props}) => {
+const DataBox = ({data, modalFn, children, currentMonth}) => {
   
   
   return(
     <Wrapper>
-      <Title>{description}</Title>
+      <Title>{children}</Title>
       <Tile type="income" data={data.income}></Tile>
       <Tile type="expenses" data={data.expenses}></Tile>
       <Tile type="taxes" data={data.taxes}></Tile>
-      {props.currentMonth ? (
+      {currentMonth ? (
         <>
         <AddTransaction onClick={() => modalFn(true)}>Dodaj transakcję</AddTransaction>
         </>

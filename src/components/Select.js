@@ -9,7 +9,7 @@ const SelectWrapper = styled.select`
 
 const Select = ({options, changeFn}) => {
   return (
-    <SelectWrapper onChange={(e) => changeFn(e.target.value)}>
+    <SelectWrapper onChange={(e) => changeFn({type: 'setType', value: e.target.value})}>
       {options.map(option => {
       return(
         <option value={option} key={option}>{option}</option>

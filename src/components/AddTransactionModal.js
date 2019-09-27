@@ -1,11 +1,12 @@
-import React, {useState} from 'react';
+import React, {useState, useReducer} from 'react';
 import styled from 'styled-components';
 import Label from '../components/Label';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import Select from '../components/Select';
-import {useSpring, animated} from 'react-spring';
+import { useSpring, animated } from 'react-spring';
 import { useStateValue } from '../data/StateProvider';
+import { random_id } from '../helpers/other_helpers';
 
 const ModalWrapper = styled.div`
   position: absolute;
@@ -72,6 +73,21 @@ const InputField = styled.div`
 `;
 
 const AddTransactionModal = ({modalFn}) => {
+
+  const new_ID = random_id();
+
+  const initialState = {
+      id: new_ID,
+      date: "",
+      client: "",
+      value: "",
+      type: "przychód",
+      VAT_level: 23,
+      client_address: "",
+      document_nr: "",
+      NIP_number: ""
+  }
+
   const fade = useSpring({
     from: {
       opacity: 0,
@@ -82,64 +98,93 @@ const AddTransactionModal = ({modalFn}) => {
       transform: 'translate3d(0, 0, 0)'
     }
   });
-  const [date, setDate] = useState("");
-  const [documentNumber, setDocumentNumber] = useState("");
-  const [value, setValue] = useState("");
-  const [vatLevel, setVatLevel] = useState(23);
   const [valueGross, setValueGross] = useState(0);
-  const [company, setCompany] = useState("");
-  const [address, setAddress] = useState("");
-  const [nip, setNip] = useState("");
-  const [type, setType] = useState("przychód");
 
   const [userProfile, dispatch] = useStateValue();
-  
+
+  const [trx, dispatchTrx] = useReducer(reducerTrx, initialState);
+
+  function reducerTrx(state, action){
+    switch(action.type) {
+      case 'setDate':
+        return {
+          ...state,
+          date: action.value
+        };
+      case 'setDocumentNumber':
+        return {
+          ...state,
+          document_nr: action.value
+        };
+      case 'setValue':
+        return {
+          ...state,
+          value: action.value
+        };
+      case 'setVatLevel':
+        return {
+          ...state,
+          vatLevel: action.value
+        };
+      case 'setCompany':
+        return {
+          ...state,
+          client: action.value
+        };
+      case 'setAddress':
+        return {
+          ...state,
+          client_address: action.value
+        };
+      case 'setNip':
+        return {
+          ...state,
+          nip: action.value
+        };
+      case 'setType':
+        return {
+          ...state,
+          type: action.value
+        }
+      case 'setID':
+        return {
+          ...state,
+          id: action.value
+        }
+      default: 
+        return state;
+        
+    }
+  }
+
   const updateValueGross = () => {
     const vat = document.getElementById("transaction_vat");
     const netto = document.getElementById("transaction_value");
     setValueGross(((vat.value / 100 + 1) * netto.value).toFixed(2));
   };
 
-  const addTransaction = (date, documentNumber, value, vatLevel, company, address, nip, type) => {
-    
-    const random_id = () => {
-      return '_' + Math.random().toString(36).substr(2, 9);
-    }
-    const newTransaction = {
-      id: random_id(),
-      date: date,
-      client: company,
-      value: value,
-      type: type,
-      VAT_level: vatLevel / 100,
-      client_address: address,
-      document_nr: documentNumber,
-      NIP_number: nip
-    }
-    dispatch({type: 'updateTransactions', value: newTransaction});
-  };
-
   return(
     <ModalWrapper>
+      {console.log(trx)}
       <Modal style={fade}>
         <CloseModal onClick={() => modalFn(false)}>x</CloseModal>
         <Title>Dodawanie transakcji:</Title>
         <ModalForm onSubmit={(e) => {
           e.preventDefault();
-          addTransaction(date, documentNumber, value, vatLevel, company, address, nip, type);
+          dispatch({type: 'updateTransactions', value: trx});
           modalFn(false);
         }}>
           <InputField>
             <Label inline htmlFor="transaction_type">Rodzaj transakcji:</Label>
-            <Select id="transaction_type" options={["przychód", "wydatek"]} changeFn={setType} />
+            <Select id="transaction_type" options={["przychód", "wydatek"]} changeFn={dispatchTrx} />
           </InputField>
           <InputField>
             <Label inline htmlFor="transaction_date">Data:</Label>
-            <Input id="transaction_date" type="date" onChange={(e) => setDate(e.target.value)}></Input>
+            <Input id="transaction_date" type="date" onChange={(e) => dispatchTrx({type: 'setDate', value: e.target.value})}/>
           </InputField>
           <InputField>
             <Label inline htmlFor="transaction_documentNumber">Numer dokumentu:</Label>
-            <Input id="transaction_documentNumber" type="text" onChange={(e) => setDocumentNumber(e.target.value)}></Input>
+            <Input id="transaction_documentNumber" type="text" onChange={(e) => dispatchTrx({type: 'setDocumentNumber', value: e.target.value})}></Input>
           </InputField>
           <InputField>
             <Label inline htmlFor="transaction_value">Wartość netto:</Label>
@@ -148,7 +193,7 @@ const AddTransactionModal = ({modalFn}) => {
               type="number" 
               step="0.01"
               onChange={(e) => {
-                setValue(e.target.value);
+                dispatchTrx({type: 'setValue', value: e.target.value});
                 updateValueGross();
               }}></Input>
           </InputField>
@@ -156,11 +201,10 @@ const AddTransactionModal = ({modalFn}) => {
             <Label inline htmlFor="transaction_vat">Stawka VAT:</Label>
             <Input 
               id="transaction_vat" 
-              type="number" 
-              value={vatLevel} 
+              type="number"  
               onChange={(e) => {
                 updateValueGross();
-                setVatLevel(e.target.value);
+                dispatchTrx({type: 'setVatLevel', value: e.target.value})
               }}></Input>
           </InputField>
           <InputField>
@@ -170,15 +214,15 @@ const AddTransactionModal = ({modalFn}) => {
           <Subtitle>Kontrahent:</Subtitle>
           <InputField>
             <Label inline htmlFor="transaction_client">Nazwa:</Label>
-            <Input id="transaction_client" type="text" onChange={(e) => setCompany(e.target.value)}></Input>
+            <Input id="transaction_client" type="text" onChange={(e) => dispatchTrx({type: 'setCompany', value: e.target.value})}></Input>
           </InputField>
           <InputField>
             <Label inline htmlFor="transaction_address">Adres:</Label>
-            <Input id="transaction_address" type="text" onChange={(e) => setAddress(e.target.value)}></Input>
+            <Input id="transaction_address" type="text" onChange={(e) => dispatchTrx({type: 'setAddress', value: e.target.value})}></Input>
           </InputField>
           <InputField>
             <Label inline htmlFor="transaction_NIP">NIP:</Label>
-            <Input id="transaction_NIP" type="text" onChange={(e) => setNip(e.target.value)}></Input>
+            <Input id="transaction_NIP" type="text" onChange={(e) => dispatchTrx({type: 'setNip', value: e.target.value})}></Input>
           </InputField>
           <Button type="submit" as="button" colorstyle="full_green">Dodaj</Button>
         </ModalForm>
